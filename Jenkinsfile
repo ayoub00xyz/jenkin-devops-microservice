@@ -1,44 +1,12 @@
 pipeline {
-    agent any
-
+    agent {
+        docker { image 'node:20.9.0-alpine3.18' }
+    }
     stages {
-        stage('Build') {
-            agent {
-                docker { 
-                    image 'maven:3.6.3' 
-                }
-            }
-            steps {
-                echo "Build"
-                sh "mvn --version"
-            }
-        }
         stage('Test') {
             steps {
-                echo "Test"
+                sh 'node --version'
             }
-        }
-        stage('Integration Test') {
-            agent {
-                docker { 
-                    image 'maven:3.6.3' 
-                }
-            }
-            steps {
-                echo "Integration Test yaaay"
-            }
-        }
-    }
-
-    post {
-        always {
-            echo "I'm awesome. I always run"
-        }
-        success {
-            echo "I run when you are successful"
-        }
-        failure {
-            echo "I run when you fail"
         }
     }
 }
